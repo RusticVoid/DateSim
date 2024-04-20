@@ -13,6 +13,6 @@ function collision.create(x, y, width, hight)
     return instance
 end
 
-function collision:check()
+function collision:draw()
     love.graphics.rectangle("line", self.x+worldX, self.y+worldY, self.width, self.hight)
 end

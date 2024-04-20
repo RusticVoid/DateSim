@@ -9,12 +9,14 @@ function love.load()
     worldY = 100
 
     collisions = {}
+    npcs = {}
     
     require("functions")
     require("classes")
 
     LoadTexture()
     loadMap()
+    loadNpcs()
 
     aDown = false
     dDown = false
@@ -33,11 +35,12 @@ end
 function love.draw()
     love.graphics.setColor(1, 1, 1)
     drawMap()
+    drawNpcs()
     love.graphics.setColor(1, 0, 0)
     love.graphics.rectangle("fill", playerX, playerY, PlayerW, PlayerH)
     if debug == true then
         for i = 1, collisionSize, 1 do
-            collisions[i]:check()
+            collisions[i]:draw()
         end
     end
 end

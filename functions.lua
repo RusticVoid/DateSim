@@ -211,3 +211,11 @@ function LoadTexture()
     wall = love.graphics.newImage("sprites/wall.png")
     wallTop = love.graphics.newImage("sprites/wallTop.png")
 end
+
+function loadNpcs()
+    npcs[1] = npc.create(0,0,10,10)
+end
+
+function drawNpcs()
+    npcs[1]:draw()
+end
