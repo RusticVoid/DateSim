@@ -22,8 +22,16 @@ function KeyInput()
             for i = 1, collisionSize, 1 do
                 if playerX < collisions[i].x+worldX + collisions[i].width and playerY+PlayerH > collisions[i].y+worldY and playerY < collisions[i].y+worldY + collisions[i].hight then
                     if playerX+PlayerW > collisions[i].x+worldX then
-                        worldX = worldX - 1
-                        print('left')
+                        if collisions[i].solid == false then
+                            if debug == true then
+                                print("inside")
+                            end
+                        else
+                            worldX = worldX - 1
+                            if debug == true then
+                                print('left')
+                            end
+                        end
                     else
                         if aDown == true then
                             worldX = worldX + 1
@@ -51,8 +59,16 @@ function KeyInput()
             for i = 1, collisionSize, 1 do
                 if playerX+PlayerW > collisions[i].x+worldX and playerY+PlayerH > collisions[i].y+worldY and playerY < collisions[i].y+worldY + collisions[i].hight then
                     if playerX < collisions[i].x+worldX + collisions[i].width then
-                        worldX = worldX + 1
-                        print('right')
+                        if collisions[i].solid == false then
+                            if debug == true then
+                                print("inside")
+                            end
+                        else
+                            worldX = worldX + 1
+                            if debug == true then
+                                print('right')
+                            end
+                        end
                     else
                         if dDown == true then
                             worldX = worldX - 1
@@ -78,10 +94,18 @@ function KeyInput()
         if love.keyboard.isDown('w') then
             wDown = true
             for i = 1, collisionSize, 1 do
-                if playerX+PlayerW > collisions[i].x+worldX and playerY < collisions[i].y+worldY + collisions[i].hight and playerX < collisions[i].x+worldX + collisions[i].width  then
+                if playerX+PlayerW > collisions[i].x+worldX and playerY < collisions[i].y+worldY + collisions[i].hight and playerX < collisions[i].x+worldX + collisions[i].width then
                     if playerY+PlayerH > collisions[i].y+worldY then
-                        worldY = worldY - 1
-                        print('up')
+                        if collisions[i].solid == false then
+                            if debug == true then
+                                print("inside")
+                            end
+                        else
+                            worldY = worldY - 1
+                            if debug == true then
+                                print('up')
+                            end
+                        end
                     else
                         if wDown == true then
                             worldY = worldY + 1
@@ -107,10 +131,18 @@ function KeyInput()
         if love.keyboard.isDown('s') then
             sDown = true
             for i = 1, collisionSize, 1 do
-                if playerX+PlayerW > collisions[i].x+worldX and playerY+PlayerH > collisions[i].y+worldY and playerX < collisions[i].x+worldX + collisions[i].width  then
+                if playerX+PlayerW > collisions[i].x+worldX and playerY+PlayerH > collisions[i].y+worldY and playerX < collisions[i].x+worldX + collisions[i].width then
                     if playerY < collisions[i].y+worldY + collisions[i].hight then
-                        worldY = worldY + 1
-                        print('down')
+                        if collisions[i].solid == false then
+                            if debug == true then
+                                print("inside")
+                            end
+                        else
+                            worldY = worldY + 1
+                            if debug == true then
+                                print('down')
+                            end
+                        end
                     else
                         if sDown == true then
                             worldY = worldY - 1
@@ -131,7 +163,6 @@ function KeyInput()
             end
         end
     end
-    --end
     
     if love.keyboard.isDown('f11') then
         fullscreen = not fullscreen
@@ -169,14 +200,14 @@ function loadMap()
         for x = 1, mapX, 1 do
             if map[y][x] == 1 then
                 collisionSize = collisionSize + 1
-                collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize)
+                collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true)
             else 
                 if map[y][x] == 0 then
                 
                 else
                     if map[y][x] == 2 then
                         collisionSize = collisionSize + 1
-                        collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize)
+                        collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true)
                     end
                 end
             end
@@ -213,7 +244,11 @@ function LoadTexture()
 end
 
 function loadNpcs()
-    npcs[1] = npc.create(0,0,10,10)
+    npcs[1] = npc.create(tileSize*7,tileSize,tileSize,tileSize, 50, 20)
+    collisionSize = collisionSize + 1
+    collisions[collisionSize] = collision.create(npcs[1].x-npcs[1].talkSize, npcs[1].y-npcs[1].talkSize, npcs[1].width+(npcs[1].talkSize*2),npcs[1].hight+(npcs[1].talkSize*2), false)
+    collisionSize = collisionSize + 1
+    collisions[collisionSize] = collision.create(npcs[1].midXcol, npcs[1].midYcol, npcs[1].size, npcs[1].size, true)
 end
 
 function drawNpcs()

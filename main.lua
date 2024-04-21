@@ -25,7 +25,7 @@ function love.load()
 
     debug = false
 
-    playerX, playerY, PlayerW, PlayerH = WindowWidth/2, WindowHight/2, 20, 20
+    playerX, playerY, PlayerW, PlayerH = WindowWidth/2, WindowHight/2, 50, 50
 end
 
 function love.update(dt)
