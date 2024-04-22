@@ -31,6 +31,7 @@ function love.load()
     TextSize = DefaultTextSize
 
     playerX, playerY, PlayerW, PlayerH, playerSpeed = WindowWidth/2, WindowHight/2, 50, 50, 1
+    coin_amount = 0
 end
 
 function love.keypressed( key, scancode, isrepeat )
@@ -116,4 +117,5 @@ function love.draw()
             collisions[i]:draw()
         end
     end
+    Ui()
 end
