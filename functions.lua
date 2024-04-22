@@ -366,12 +366,24 @@ function LoadTexture()
 end
 
 function loadNpcs()
-    npcs[1] = npc.create(tileSize*1,tileSize*5,tileSize,tileSize, 50, 30, "sprites/TEST_charchter.png", collisionSize + 1, "Hello, My name is Aloe Starcon.")
+    npcs[1] = npc.create(tileSize*1,tileSize*5,tileSize,tileSize, 50, 30, "sprites/TEST_charchter.png", collisionSize + 1, {
+        "Hello, My name is Aloe Starcon.", --npc
+        "Hello",                           --player
+        "Hows your day.",                  --npc
+        "good",                            --player
+        "thats nice",                      --npc
+        ""                                 --player
+    })
     collisionSize = collisionSize + 1
     collisions[collisionSize] = collision.create(npcs[1].x-npcs[1].talkSize, npcs[1].y-npcs[1].talkSize, npcs[1].width+(npcs[1].talkSize*2),npcs[1].hight+(npcs[1].talkSize*2), false, collisionSize)
     collisionSize = collisionSize + 1
     collisions[collisionSize] = collision.create(npcs[1].midXcol, npcs[1].midYcol, npcs[1].size, npcs[1].size, true, collisionSize)
-    npcs[2] = npc.create(tileSize*5,tileSize*1,tileSize,tileSize, 50, 30, "sprites/TEST_charchter_red.png", collisionSize + 1, "Hello, My name is Brett Rockton.")
+    npcs[2] = npc.create(tileSize*5,tileSize*1,tileSize,tileSize, 50, 30, "sprites/TEST_charchter_red.png", collisionSize + 1, {
+        "Hi I'm Brett Rockton.",           --npc
+        "Your ugly.",                      --player
+        "Get Away From Me!",               --npc
+        ""                                 --player
+    })
     collisionSize = collisionSize + 1
     collisions[collisionSize] = collision.create(npcs[2].x-npcs[2].talkSize, npcs[2].y-npcs[2].talkSize, npcs[2].width+(npcs[2].talkSize*2),npcs[2].hight+(npcs[2].talkSize*2), false, collisionSize)
     collisionSize = collisionSize + 1

@@ -25,6 +25,9 @@ function npc.create(x, y, width, hight, size, talkSize, protrait, collisionQ, te
     instance.collisionQ = collisionQ
     instance.playerNear = false
     instance.text = text
+    instance.currentText = 1
+    instance.playerText = text
+    instance.currentPlayerText = 2
     return instance
 end
 
@@ -49,10 +52,31 @@ function npc:draw()
     if interacted == true and self.playerNear == true then
         self.speechbubbleX = self.protraitX+5*self.protraitSize
         self.speechbubbleY = self.protraitY+230*self.protraitSize
+
         love.graphics.draw(self.protrait, self.protraitX, self.protraitY, 0, self.protraitSize)
+
         love.graphics.draw(speech_bubble, self.speechbubbleX, self.speechbubbleY, 0, speechBubbleSize)
         love.graphics.setColor(0, 0, 0)
-        love.graphics.print(self.text, self.speechbubbleX+20, self.speechbubbleY+20, 0, TextSize)
+        love.graphics.print(self.text[self.currentText], self.speechbubbleX+20*self.protraitSize, self.speechbubbleY+20*self.protraitSize, 0, TextSize)
+        
+        if MouseX > self.speechbubbleX+45*self.protraitSize and MouseX < self.speechbubbleX+45*self.protraitSize+150 and MouseY > self.speechbubbleY+45*self.protraitSize and MouseY < self.speechbubbleY+45*self.protraitSize+50 then
+            love.graphics.setColor(0.7, 0.7, 1)
+            love.graphics.rectangle("fill", self.speechbubbleX+45*self.protraitSize, self.speechbubbleY+45*self.protraitSize, 150, 50)
+            if MousePressed == true then
+                if self.currentText+1 < #self.text then
+                    self.currentText = self.currentText + 2
+                end
+                if self.currentPlayerText+1 < #self.text then
+                    self.currentPlayerText = self.currentPlayerText + 2
+                end
+                love.timer.sleep(0.1)
+            end
+        else
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.rectangle("fill", self.speechbubbleX+45*self.protraitSize, self.speechbubbleY+45*self.protraitSize, 150, 50)
+        end
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.print(self.playerText[self.currentPlayerText], self.speechbubbleX+45*self.protraitSize, self.speechbubbleY+45*self.protraitSize, 0, TextSize)
     end
     
     love.graphics.setColor(1, 1, 1)

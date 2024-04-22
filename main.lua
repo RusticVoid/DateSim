@@ -25,8 +25,10 @@ function love.load()
     interact = false
     debug = false
 
-    speechBubbleSize = 10
-    TextSize = 3
+    DefaultSpeechBubbleSize = 10
+    speechBubbleSize = DefaultSpeechBubbleSize
+    DefaultTextSize = 2
+    TextSize = DefaultTextSize
 
     playerX, playerY, PlayerW, PlayerH, playerSpeed = WindowWidth/2, WindowHight/2, 50, 50, 1
 end
@@ -52,12 +54,14 @@ function love.keypressed( key, scancode, isrepeat )
             worldY = worldY + 240
             npcs[1].protraitSize = 2.5
             speechBubbleSize = 24
+            TextSize = 8
         else
             love.window.setMode( 800, 600, {vsync=0} )
             worldX = worldX - 560
             worldY = worldY - 240
             npcs[1].protraitSize = 1.2
-            speechBubbleSize = 10
+            speechBubbleSize = DefaultSpeechBubbleSize
+            TextSize = DefaultTextSize
         end
     end
 
@@ -80,9 +84,22 @@ function love.keyreleased( key, scancode )
     end
 end
 
+function love.mousepressed( x, y, button, istouch, presses )
+    if button == 1 then
+        MousePressed = true
+    end
+end
+
+function love.mousereleased( x, y, button, istouch, presses )
+    if button == 1 then
+        MousePressed = false
+    end
+end
+
 function love.update(dt)
     WindowWidth, WindowHight = love.window.getMode()
     playerX, playerY = WindowWidth/2, WindowHight/2
+    MouseX, MouseY = love.mouse.getPosition()
     KeyInput()
 end
 
