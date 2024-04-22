@@ -60,8 +60,12 @@ function npc:draw()
         love.graphics.print(self.text[self.currentText], self.speechbubbleX+20*self.protraitSize, self.speechbubbleY+20*self.protraitSize, 0, TextSize)
         
         if MouseX > self.speechbubbleX+45*self.protraitSize and MouseX < self.speechbubbleX+45*self.protraitSize+150 and MouseY > self.speechbubbleY+45*self.protraitSize and MouseY < self.speechbubbleY+45*self.protraitSize+50 then
-            love.graphics.setColor(0.7, 0.7, 1)
-            love.graphics.rectangle("fill", self.speechbubbleX+45*self.protraitSize, self.speechbubbleY+45*self.protraitSize, 150, 50)
+            if self.playerText[self.currentPlayerText] == "" then
+            else
+                love.graphics.setColor(0.7, 0.7, 1)
+                love.graphics.rectangle("fill", self.speechbubbleX+45*self.protraitSize, self.speechbubbleY+45*self.protraitSize, 150, 50)
+            end
+            
             if MousePressed == true then
                 if self.currentText+1 < #self.text then
                     self.currentText = self.currentText + 2
@@ -72,8 +76,11 @@ function npc:draw()
                 love.timer.sleep(0.1)
             end
         else
-            love.graphics.setColor(1, 1, 1)
-            love.graphics.rectangle("fill", self.speechbubbleX+45*self.protraitSize, self.speechbubbleY+45*self.protraitSize, 150, 50)
+            if self.playerText[self.currentPlayerText] == "" then
+            else
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.rectangle("fill", self.speechbubbleX+45*self.protraitSize, self.speechbubbleY+45*self.protraitSize, 150, 50)
+            end
         end
         love.graphics.setColor(0, 0, 0)
         love.graphics.print(self.playerText[self.currentPlayerText], self.speechbubbleX+45*self.protraitSize, self.speechbubbleY+45*self.protraitSize, 0, TextSize)
