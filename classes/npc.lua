@@ -4,7 +4,7 @@ require "main"
 npc = {}
 npc.__index = npc
 
-function npc.create(x, y, width, hight, size, talkSize, protrait)
+function npc.create(x, y, width, hight, size, talkSize, protrait, collisionQ, text)
     local instance = setmetatable({}, npc)
     instance.x = x
     instance.y = y
@@ -22,6 +22,9 @@ function npc.create(x, y, width, hight, size, talkSize, protrait)
     instance.protraitY = 200
     instance.speechbubbleX = instance.protraitX+5*instance.protraitSize
     instance.speechbubbleY = instance.protraitY+230*instance.protraitSize
+    instance.collisionQ = collisionQ
+    instance.playerNear = false
+    instance.text = text
     return instance
 end
 
@@ -32,7 +35,7 @@ function npc:draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.rectangle("fill", self.midX, self.midY, self.size,self.size)
 
-    if interact == true then
+    if self.playerNear == true then
         if debug == true then
             print("interact")
         end
@@ -43,11 +46,13 @@ function npc:draw()
         love.graphics.draw(E_talk, self.midX, self.midY)
     end
 
-    if interacted == true then
+    if interacted == true and self.playerNear == true then
         self.speechbubbleX = self.protraitX+5*self.protraitSize
         self.speechbubbleY = self.protraitY+230*self.protraitSize
         love.graphics.draw(self.protrait, self.protraitX, self.protraitY, 0, self.protraitSize)
         love.graphics.draw(speech_bubble, self.speechbubbleX, self.speechbubbleY, 0, speechBubbleSize)
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.print(self.text, self.speechbubbleX+20, self.speechbubbleY+20, 0, TextSize)
     end
     
     love.graphics.setColor(1, 1, 1)

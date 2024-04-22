@@ -26,8 +26,9 @@ function love.load()
     debug = false
 
     speechBubbleSize = 10
+    TextSize = 3
 
-    playerX, playerY, PlayerW, PlayerH = WindowWidth/2, WindowHight/2, 50, 50
+    playerX, playerY, PlayerW, PlayerH, playerSpeed = WindowWidth/2, WindowHight/2, 50, 50, 1
 end
 
 function love.keypressed( key, scancode, isrepeat )
@@ -63,6 +64,20 @@ function love.keypressed( key, scancode, isrepeat )
     if key == 'f1' then
         debug = not debug
     end
+    
+    if key == 'lshift' then
+        if debug == true then
+            playerSpeed = 5
+        else
+            playerSpeed = 2
+        end
+    end
+end
+
+function love.keyreleased( key, scancode )
+    if key == 'lshift' then
+        playerSpeed = 1
+    end
 end
 
 function love.update(dt)
@@ -74,10 +89,12 @@ end
 function love.draw()
     love.graphics.setColor(1, 1, 1)
     drawMap()
-    drawNpcs()
     love.graphics.setColor(1, 0, 0)
     love.graphics.rectangle("fill", playerX, playerY, PlayerW, PlayerH)
+    drawMap2()
+    drawNpcs()
     if debug == true then
+        love.graphics.setColor(1, 0, 0)
         for i = 1, collisionSize, 1 do
             collisions[i]:draw()
         end

@@ -29,29 +29,45 @@ function KeyInput()
                                     print("inside")
                                 end
                                 interact = true
+                                if collisions[i].collisionID == npcs[1].collisionQ then
+                                    if debug == true then
+                                        print("npc 1")
+                                    end
+                                    npcs[1].playerNear = true
+                                else
+                                    if collisions[i].collisionID == npcs[2].collisionQ then
+                                        if debug == true then
+                                            print("npc 2")
+                                        end
+                                        npcs[2].playerNear = true
+                                    else
+                                    end
+                                end
                             else
-                                worldX = worldX - 1
+                                worldX = worldX - playerSpeed
                                 if debug == true then
                                     print('left')
                                 end
                             end
                         else
                             if aDown == true then
-                                worldX = worldX + 1
+                                worldX = worldX + playerSpeed
                                 aDown = false
                             end
                         end
                     else
                         if aDown == true then
-                            worldX = worldX + 1
+                            worldX = worldX + playerSpeed
                             aDown = false
                             interact = false
+                            npcs[1].playerNear = false
+                            npcs[2].playerNear = false
                         end
                     end
                 end
             else
                 if aDown == true then
-                    worldX = worldX - 1
+                    worldX = worldX - playerSpeed
                     aDown = false
                 end
             end
@@ -68,29 +84,45 @@ function KeyInput()
                                     print("inside")
                                 end
                                 interact = true
+                                if collisions[i].collisionID == npcs[1].collisionQ then
+                                    if debug == true then
+                                        print("npc 1")
+                                    end
+                                    npcs[1].playerNear = true
+                                else
+                                    if collisions[i].collisionID == npcs[2].collisionQ then
+                                        if debug == true then
+                                            print("npc 2")
+                                        end
+                                        npcs[2].playerNear = true
+                                    else
+                                    end
+                                end
                             else
-                                worldX = worldX + 1
+                                worldX = worldX + playerSpeed
                                 if debug == true then
                                     print('right')
                                 end
                             end
                         else
                             if dDown == true then
-                                worldX = worldX - 1
+                                worldX = worldX - playerSpeed
                                 dDown = false
                             end
                         end
                     else
                         if dDown == true then
-                            worldX = worldX - 1
+                            worldX = worldX - playerSpeed
                             dDown = false
                             interact = false
+                            npcs[1].playerNear = false
+                            npcs[2].playerNear = false
                         end
                     end
                 end
             else
                 if dDown == true then
-                    worldX = worldX + 1
+                    worldX = worldX + playerSpeed
                     dDown = false
                 end
             end
@@ -107,29 +139,45 @@ function KeyInput()
                                     print("inside")
                                 end
                                 interact = true
+                                if collisions[i].collisionID == npcs[1].collisionQ then
+                                    if debug == true then
+                                        print("npc 1")
+                                    end
+                                    npcs[1].playerNear = true
+                                else
+                                    if collisions[i].collisionID == npcs[2].collisionQ then
+                                        if debug == true then
+                                            print("npc 2")
+                                        end
+                                        npcs[2].playerNear = true
+                                    else
+                                    end
+                                end
                             else
-                                worldY = worldY - 1
+                                worldY = worldY - playerSpeed
                                 if debug == true then
                                     print('up')
                                 end
                             end
                         else
                             if wDown == true then
-                                worldY = worldY + 1
+                                worldY = worldY + playerSpeed
                                 wDown = false
                             end
                         end
                     else
                         if wDown == true then
-                            worldY = worldY + 1
+                            worldY = worldY + playerSpeed
                             wDown = false
                             interact = false
+                            npcs[1].playerNear = false
+                            npcs[2].playerNear = false
                         end
                     end
                 end
             else
                 if wDown == true then
-                    worldY = worldY - 1
+                    worldY = worldY - playerSpeed
                     wDown = false
                 end
             end
@@ -146,29 +194,45 @@ function KeyInput()
                                     print("inside")
                                 end
                                 interact = true
+                                if collisions[i].collisionID == npcs[1].collisionQ then
+                                    if debug == true then
+                                        print("npc 1")
+                                    end
+                                    npcs[1].playerNear = true
+                                else
+                                    if collisions[i].collisionID == npcs[2].collisionQ then
+                                        if debug == true then
+                                            print("npc 2")
+                                        end
+                                        npcs[2].playerNear = true
+                                    else
+                                    end
+                                end
                             else
-                                worldY = worldY + 1
+                                worldY = worldY + playerSpeed
                                 if debug == true then
                                     print('down')
                                 end
                             end
                         else
                             if sDown == true then
-                                worldY = worldY - 1
+                                worldY = worldY - playerSpeed
                                 sDown = false
                             end
                         end
                     else
                         if sDown == true then
-                            worldY = worldY - 1
+                            worldY = worldY - playerSpeed
                             sDown = false
                             interact = false
+                            npcs[1].playerNear = false
+                            npcs[2].playerNear = false
                         end
                     end
                 end
             else
                 if sDown == true then
-                    worldY = worldY + 1
+                    worldY = worldY + playerSpeed
                     sDown = false
                 end
             end
@@ -190,7 +254,7 @@ function loadMap()
     map2 = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -208,14 +272,14 @@ function loadMap()
         for x = 1, mapX, 1 do
             if map[y][x] == 1 then
                 collisionSize = collisionSize + 1
-                collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true)
+                collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true, collisionSize)
             else 
                 if map[y][x] == 0 then
                     
                 else
                     if map[y][x] == 2 then
                         collisionSize = collisionSize + 1
-                        collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true)
+                        collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true, collisionSize)
                     end
                 end
             end
@@ -227,11 +291,16 @@ function loadMap()
             else 
                 if map2[y][x] == 1 then
                     collisionSize = collisionSize + 1
-                    collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true)
+                    collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true, collisionSize)
                 else  
                     if map2[y][x] == 2 then
                         collisionSize = collisionSize + 1
-                        collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true)
+                        collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, true, collisionSize)
+                    else
+                        if map2[y][x] == 3 then
+                            collisionSize = collisionSize + 1
+                            collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize+44, tileSize,tileSize, true, collisionSize)
+                        end
                     end
                 end
             end
@@ -258,6 +327,9 @@ function drawMap()
             end
         end
     end
+end
+
+function drawMap2()
     for y = 1, mapY, 1 do
         for x = 1, mapX, 1 do
             if map2[y][x] == 0 then
@@ -269,6 +341,11 @@ function drawMap()
                     if map2[y][x] == 2 then
                         love.graphics.setColor(1, 1, 1)
                         love.graphics.draw(FloorBed_bottom, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale,tileScale)
+                    else
+                        if map2[y][x] == 3 then
+                            love.graphics.setColor(1, 1, 1)
+                        love.graphics.draw(wooden_box, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale,tileScale)
+                        end
                     end
                 end
             end
@@ -285,16 +362,23 @@ function LoadTexture()
     speech_bubble = love.graphics.newImage("sprites/speech_bubble.png")
     FloorBed_bottom = love.graphics.newImage("sprites/FloorBed_bottom.png")
     FloorBed_top = love.graphics.newImage("sprites/FloorBed_top.png")
+    wooden_box = love.graphics.newImage("sprites/wooden_box.png")
 end
 
 function loadNpcs()
-    npcs[1] = npc.create(tileSize*1,tileSize*5,tileSize,tileSize, 50, 20, "sprites/TEST_charchter.png")
+    npcs[1] = npc.create(tileSize*1,tileSize*5,tileSize,tileSize, 50, 30, "sprites/TEST_charchter.png", collisionSize + 1, "Hello, My name is Aloe Starcon.")
     collisionSize = collisionSize + 1
-    collisions[collisionSize] = collision.create(npcs[1].x-npcs[1].talkSize, npcs[1].y-npcs[1].talkSize, npcs[1].width+(npcs[1].talkSize*2),npcs[1].hight+(npcs[1].talkSize*2), false)
+    collisions[collisionSize] = collision.create(npcs[1].x-npcs[1].talkSize, npcs[1].y-npcs[1].talkSize, npcs[1].width+(npcs[1].talkSize*2),npcs[1].hight+(npcs[1].talkSize*2), false, collisionSize)
     collisionSize = collisionSize + 1
-    collisions[collisionSize] = collision.create(npcs[1].midXcol, npcs[1].midYcol, npcs[1].size, npcs[1].size, true)
+    collisions[collisionSize] = collision.create(npcs[1].midXcol, npcs[1].midYcol, npcs[1].size, npcs[1].size, true, collisionSize)
+    npcs[2] = npc.create(tileSize*5,tileSize*1,tileSize,tileSize, 50, 30, "sprites/TEST_charchter_red.png", collisionSize + 1, "Hello, My name is Brett Rockton.")
+    collisionSize = collisionSize + 1
+    collisions[collisionSize] = collision.create(npcs[2].x-npcs[2].talkSize, npcs[2].y-npcs[2].talkSize, npcs[2].width+(npcs[2].talkSize*2),npcs[2].hight+(npcs[2].talkSize*2), false, collisionSize)
+    collisionSize = collisionSize + 1
+    collisions[collisionSize] = collision.create(npcs[2].midXcol, npcs[2].midYcol, npcs[2].size, npcs[2].size, true, collisionSize)
 end
 
 function drawNpcs()
     npcs[1]:draw()
+    npcs[2]:draw()
 end
