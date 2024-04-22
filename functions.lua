@@ -257,7 +257,7 @@ function loadMap()
         {0,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     }
     mapSize = #map*#map[1]
@@ -300,7 +300,12 @@ function loadMap()
                         if map2[y][x] == 3 then
                             collisionSize = collisionSize + 1
                             collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize+44, tileSize,tileSize, true, collisionSize)
-                        end
+                        else
+                            if map2[y][x] == 4 then
+                                collisionSize = collisionSize + 1
+                                collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, false, collisionSize)
+                            end
+                        end    
                     end
                 end
             end
@@ -344,7 +349,12 @@ function drawMap2()
                     else
                         if map2[y][x] == 3 then
                             love.graphics.setColor(1, 1, 1)
-                        love.graphics.draw(wooden_box, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale,tileScale)
+                            love.graphics.draw(wooden_box, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale,tileScale)
+                        else
+                            if map2[y][x] == 4 then
+                                love.graphics.setColor(1, 1, 1)
+                                love.graphics.draw(coin_UI, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale,tileScale)
+                            end
                         end
                     end
                 end
@@ -363,6 +373,7 @@ function LoadTexture()
     FloorBed_bottom = love.graphics.newImage("sprites/FloorBed_bottom.png")
     FloorBed_top = love.graphics.newImage("sprites/FloorBed_top.png")
     wooden_box = love.graphics.newImage("sprites/wooden_box.png")
+    coin_UI = love.graphics.newImage("sprites/coin.png")
 end
 
 function loadNpcs()
@@ -393,4 +404,9 @@ end
 function drawNpcs()
     npcs[1]:draw()
     npcs[2]:draw()
+end
+
+function Ui()
+    love.graphics.draw(coin_UI, 0, 0, 0, 10)
+    love.graphics.print(":"..coin_amount, 80, -5, 0, 6)
 end
