@@ -11,10 +11,6 @@ function file_exist(name)
 end
 
 function KeyInput()
-    --playerX+PlayerW > collisions[1].x+worldX
-    --playerX < collisions[1].x+worldX + collisions[1].width 
-    --playerY+PlayerH > collisions[1].y+worldY
-    --playerY < collisions[1].y+worldY + collisions[1].hight
     if interacted == true then
 
     else
@@ -25,24 +21,7 @@ function KeyInput()
                     if playerX < collisions[i].x+worldX + collisions[i].width and playerY+PlayerH > collisions[i].y+worldY and playerY < collisions[i].y+worldY + collisions[i].hight then
                         if playerX+PlayerW > collisions[i].x+worldX then
                             if collisions[i].solid == false then
-                                if debug == true then
-                                    print("inside")
-                                end
-                                interact = true
-                                if collisions[i].collisionID == npcs[1].collisionQ then
-                                    if debug == true then
-                                        print("npc 1")
-                                    end
-                                    npcs[1].playerNear = true
-                                else
-                                    if collisions[i].collisionID == npcs[2].collisionQ then
-                                        if debug == true then
-                                            print("npc 2")
-                                        end
-                                        npcs[2].playerNear = true
-                                    else
-                                    end
-                                end
+                                interactFunc(i)
                             else
                                 worldX = worldX - playerSpeed
                                 if debug == true then
@@ -59,9 +38,7 @@ function KeyInput()
                         if aDown == true then
                             worldX = worldX + playerSpeed
                             aDown = false
-                            interact = false
-                            npcs[1].playerNear = false
-                            npcs[2].playerNear = false
+                            interactFalse()
                         end
                     end
                 end
@@ -80,24 +57,7 @@ function KeyInput()
                     if playerX+PlayerW > collisions[i].x+worldX and playerY+PlayerH > collisions[i].y+worldY and playerY < collisions[i].y+worldY + collisions[i].hight then
                         if playerX < collisions[i].x+worldX + collisions[i].width then
                             if collisions[i].solid == false then
-                                if debug == true then
-                                    print("inside")
-                                end
-                                interact = true
-                                if collisions[i].collisionID == npcs[1].collisionQ then
-                                    if debug == true then
-                                        print("npc 1")
-                                    end
-                                    npcs[1].playerNear = true
-                                else
-                                    if collisions[i].collisionID == npcs[2].collisionQ then
-                                        if debug == true then
-                                            print("npc 2")
-                                        end
-                                        npcs[2].playerNear = true
-                                    else
-                                    end
-                                end
+                                interactFunc(i)
                             else
                                 worldX = worldX + playerSpeed
                                 if debug == true then
@@ -114,9 +74,7 @@ function KeyInput()
                         if dDown == true then
                             worldX = worldX - playerSpeed
                             dDown = false
-                            interact = false
-                            npcs[1].playerNear = false
-                            npcs[2].playerNear = false
+                            interactFalse()
                         end
                     end
                 end
@@ -135,24 +93,7 @@ function KeyInput()
                     if playerX+PlayerW > collisions[i].x+worldX and playerY < collisions[i].y+worldY + collisions[i].hight and playerX < collisions[i].x+worldX + collisions[i].width then
                         if playerY+PlayerH > collisions[i].y+worldY then
                             if collisions[i].solid == false then
-                                if debug == true then
-                                    print("inside")
-                                end
-                                interact = true
-                                if collisions[i].collisionID == npcs[1].collisionQ then
-                                    if debug == true then
-                                        print("npc 1")
-                                    end
-                                    npcs[1].playerNear = true
-                                else
-                                    if collisions[i].collisionID == npcs[2].collisionQ then
-                                        if debug == true then
-                                            print("npc 2")
-                                        end
-                                        npcs[2].playerNear = true
-                                    else
-                                    end
-                                end
+                                interactFunc(i)
                             else
                                 worldY = worldY - playerSpeed
                                 if debug == true then
@@ -169,9 +110,7 @@ function KeyInput()
                         if wDown == true then
                             worldY = worldY + playerSpeed
                             wDown = false
-                            interact = false
-                            npcs[1].playerNear = false
-                            npcs[2].playerNear = false
+                            interactFalse()
                         end
                     end
                 end
@@ -190,24 +129,7 @@ function KeyInput()
                     if playerX+PlayerW > collisions[i].x+worldX and playerY+PlayerH > collisions[i].y+worldY and playerX < collisions[i].x+worldX + collisions[i].width then
                         if playerY < collisions[i].y+worldY + collisions[i].hight then
                             if collisions[i].solid == false then
-                                if debug == true then
-                                    print("inside")
-                                end
-                                interact = true
-                                if collisions[i].collisionID == npcs[1].collisionQ then
-                                    if debug == true then
-                                        print("npc 1")
-                                    end
-                                    npcs[1].playerNear = true
-                                else
-                                    if collisions[i].collisionID == npcs[2].collisionQ then
-                                        if debug == true then
-                                            print("npc 2")
-                                        end
-                                        npcs[2].playerNear = true
-                                    else
-                                    end
-                                end
+                                interactFunc(i)
                             else
                                 worldY = worldY + playerSpeed
                                 if debug == true then
@@ -224,9 +146,7 @@ function KeyInput()
                         if sDown == true then
                             worldY = worldY - playerSpeed
                             sDown = false
-                            interact = false
-                            npcs[1].playerNear = false
-                            npcs[2].playerNear = false
+                            interactFalse()
                         end
                     end
                 end
@@ -237,6 +157,10 @@ function KeyInput()
                 end
             end
         end
+    end
+    
+    if love.keyboard.isDown('q') then
+        coin_amount = coin_amount + 1
     end
 end
 
@@ -353,7 +277,7 @@ function drawMap2()
                         else
                             if map2[y][x] == 4 then
                                 love.graphics.setColor(1, 1, 1)
-                                love.graphics.draw(coin_UI, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale,tileScale)
+                                love.graphics.draw(coin_UI, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale*4,tileScale*4)
                             end
                         end
                     end
@@ -377,24 +301,12 @@ function LoadTexture()
 end
 
 function loadNpcs()
-    npcs[1] = npc.create(tileSize*1,tileSize*5,tileSize,tileSize, 50, 30, "sprites/TEST_charchter.png", collisionSize + 1, {
-        "Hello, My name is Aloe Starcon.", --npc
-        "Hello",                           --player
-        "Hows your day.",                  --npc
-        "good",                            --player
-        "thats nice",                      --npc
-        ""                                 --player
-    })
+    npcs[1] = npc.create(tileSize*1,tileSize*5,tileSize,tileSize, 50, 30, "sprites/TEST_charchter.png", collisionSize + 1, "Sup.", "Hello!")
     collisionSize = collisionSize + 1
     collisions[collisionSize] = collision.create(npcs[1].x-npcs[1].talkSize, npcs[1].y-npcs[1].talkSize, npcs[1].width+(npcs[1].talkSize*2),npcs[1].hight+(npcs[1].talkSize*2), false, collisionSize)
     collisionSize = collisionSize + 1
     collisions[collisionSize] = collision.create(npcs[1].midXcol, npcs[1].midYcol, npcs[1].size, npcs[1].size, true, collisionSize)
-    npcs[2] = npc.create(tileSize*5,tileSize*1,tileSize,tileSize, 50, 30, "sprites/TEST_charchter_red.png", collisionSize + 1, {
-        "Hi I'm Brett Rockton.",           --npc
-        "Your ugly.",                      --player
-        "Get Away From Me!",               --npc
-        ""                                 --player
-    })
+    npcs[2] = npc.create(tileSize*5,tileSize*1,tileSize,tileSize, 50, 30, "sprites/TEST_charchter_red.png", collisionSize + 1, "Hey.", "Hello!")
     collisionSize = collisionSize + 1
     collisions[collisionSize] = collision.create(npcs[2].x-npcs[2].talkSize, npcs[2].y-npcs[2].talkSize, npcs[2].width+(npcs[2].talkSize*2),npcs[2].hight+(npcs[2].talkSize*2), false, collisionSize)
     collisionSize = collisionSize + 1
@@ -409,4 +321,167 @@ end
 function Ui()
     love.graphics.draw(coin_UI, 0, 0, 0, 10)
     love.graphics.print(":"..coin_amount, 80, -5, 0, 6)
+end
+
+function interactFunc(i)
+    if debug == true then
+        print("inside")
+    end
+
+    if collisions[i].collisionID == npcs[1].collisionQ then
+        if debug == true then
+            print("npc 1")
+        end
+        npcs[1].playerNear = true
+        interact = true
+    end
+
+    if collisions[i].collisionID == npcs[2].collisionQ then
+        if debug == true then
+            print("npc 2")
+        end
+        npcs[2].playerNear = true
+        interact = true
+    end
+end
+
+function interactFalse()
+    interact = false
+    npcs[1].playerNear = false
+    npcs[2].playerNear = false
+end
+
+function NpcTalk()
+    if interacted == true and npcs[1].playerNear == true then
+        npcs[1].speechbubbleX = npcs[1].protraitX+5*npcs[1].protraitSize
+        npcs[1].speechbubbleY = npcs[1].protraitY+230*npcs[1].protraitSize
+        
+        npcs[1].buttonX = npcs[1].speechbubbleX+45*npcs[1].protraitSize
+        npcs[1].buttonY = npcs[1].speechbubbleY+60*npcs[1].protraitSize
+        npcs[1].buttonSizeX = 35*TextSize + npcs[1].buttonMorphX
+        npcs[1].buttonSizeY = 13*TextSize + npcs[1].buttonMorphY
+
+        love.graphics.draw(npcs[1].protrait, npcs[1].protraitX, npcs[1].protraitY, 0, npcs[1].protraitSize)
+        love.graphics.draw(speech_bubble, npcs[1].speechbubbleX, npcs[1].speechbubbleY, 0, speechBubbleSize)
+        love.graphics.setColor(1, 0.1, 0.1)
+        love.graphics.print(npcs[1].say, npcs[1].speechbubbleX+20*npcs[1].protraitSize, npcs[1].speechbubbleY+20*npcs[1].protraitSize, 0, TextSize*1.2)
+
+        if MouseX > npcs[1].buttonX and MouseX < npcs[1].buttonX+npcs[1].buttonSizeX and MouseY > npcs[1].buttonY and MouseY < npcs[1].buttonY+npcs[1].buttonSizeY then
+            love.graphics.setColor(0.7, 0.7, 1)
+            love.graphics.rectangle("fill", npcs[1].buttonX, npcs[1].buttonY, npcs[1].buttonSizeX, npcs[1].buttonSizeY)
+        
+            if MousePressed == true then
+                if npcs[1].stage == 1 then
+                    npcs[1].say = "What's your name?"
+                    npcs[1].buttonMorphX = 120
+                    npcs[1].PlayerSay = " *Your Name*"
+                    npcs[1].stage = 2
+                    love.timer.sleep(0.1)
+                else
+                    if npcs[1].stage == 2 then
+                        npcs[1].say = "Thats a cool name."
+                        npcs[1].buttonMorphX = 10
+                        npcs[1].PlayerSay = "Thanks"
+                        npcs[1].stage = 3
+                        love.timer.sleep(0.1)
+                    else
+                        if npcs[1].stage == 3 then
+                            npcs[1].say = "Oh wait can you help me with something!"
+                            npcs[1].buttonMorphX = 190
+                            npcs[1].PlayerSay = "What can I help with."
+                            npcs[1].stage = 4
+                            love.timer.sleep(0.1)
+                        else
+                            if npcs[1].stage == 4 then
+                                npcs[1].say = "I need 4 gold to pay my rent to Mr. Landlord."
+                                npcs[1].buttonMorphX = 250
+                                npcs[1].PlayerSay = "Ok I'll get you some gold."
+                                npcs[1].stage = 5
+                                love.timer.sleep(0.1)
+                            else
+                                if npcs[1].stage == 5 then
+                                    npcs[1].say = "Thank you so much!"
+                                    npcs[1].buttonMorphX = 80
+                                    npcs[1].PlayerSay = "No problem."
+                                    npcs[1].stage = 6
+                                    love.timer.sleep(0.1)
+                                else
+                                    if npcs[1].stage == 6 then
+                                        npcs[1].say = "Come back with 4 cold."
+                                        if coin_amount >= 4 then
+                                            npcs[1].buttonMorphX = 140
+                                            npcs[1].PlayerSay = "Heres The Gold!"
+                                            npcs[1].stage = 7
+                                        else
+                                            npcs[1].buttonMorphX = 190
+                                            npcs[1].PlayerSay = "*Not Enough Gold!*"
+                                            npcs[1].stage = 6
+                                            update = true
+                                        end
+                                        love.timer.sleep(0.1)
+                                    else
+                                        if npcs[1].stage == 7 then
+                                            npcs[1].say = "Thank you so much your so kind."
+                                            npcs[1].buttonMorphX = 80
+                                            npcs[1].PlayerSay = "No problem!"
+                                            npcs[1].stage = 7
+                                            love.timer.sleep(0.1)
+                                        else
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end 
+                end
+            end
+        else
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.rectangle("fill", npcs[1].buttonX, npcs[1].buttonY, npcs[1].buttonSizeX, npcs[1].buttonSizeY)
+        end
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.print(npcs[1].PlayerSay, npcs[1].buttonX, npcs[1].buttonY, 0, TextSize*1.1)
+
+        if update == true then
+            if coin_amount >= 4 then
+                npcs[1].buttonMorphX = 140
+                npcs[1].PlayerSay = "Heres The Gold!"
+                npcs[1].stage = 7
+                update = false
+            else
+                npcs[1].buttonMorphX = 190
+                npcs[1].PlayerSay = "*Not Enough Gold!*"
+                npcs[1].stage = 6
+            end
+        end
+    end
+
+    if interacted == true and npcs[2].playerNear == true then
+        npcs[2].speechbubbleX = npcs[2].protraitX+5*npcs[2].protraitSize
+        npcs[2].speechbubbleY = npcs[2].protraitY+230*npcs[2].protraitSize
+        
+        npcs[2].buttonX = npcs[2].speechbubbleX+45*npcs[2].protraitSize
+        npcs[2].buttonY = npcs[2].speechbubbleY+60*npcs[2].protraitSize
+        npcs[2].buttonSizeX = 50*TextSize
+        npcs[2].buttonSizeY = 13*TextSize
+
+        love.graphics.draw(npcs[2].protrait, npcs[2].protraitX, npcs[2].protraitY, 0, npcs[2].protraitSize)
+        love.graphics.draw(speech_bubble, npcs[2].speechbubbleX, npcs[2].speechbubbleY, 0, speechBubbleSize)
+        love.graphics.setColor(1, 0.1, 0.1)
+        love.graphics.print("Hey.", npcs[2].speechbubbleX+20*npcs[2].protraitSize, npcs[2].speechbubbleY+20*npcs[2].protraitSize, 0, TextSize*1.2)
+
+        if MouseX > npcs[2].buttonX and MouseX < npcs[2].buttonX+npcs[2].buttonSizeX and MouseY > npcs[2].buttonY and MouseY < npcs[2].buttonY+npcs[2].buttonSizeY then
+            love.graphics.setColor(0.7, 0.7, 1)
+            love.graphics.rectangle("fill", npcs[2].buttonX, npcs[2].buttonY, npcs[2].buttonSizeX, npcs[2].buttonSizeY)
+
+            if MousePressed == true then
+                love.timer.sleep(0.1)
+            end
+        else
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.rectangle("fill", npcs[2].buttonX, npcs[2].buttonY, npcs[2].buttonSizeX, npcs[2].buttonSizeY)
+        end
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.print("hello", npcs[2].buttonX, npcs[2].buttonY, 0, TextSize*1.1)
+    end
 end

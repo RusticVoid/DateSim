@@ -27,8 +27,12 @@ function love.load()
 
     DefaultSpeechBubbleSize = 10
     speechBubbleSize = DefaultSpeechBubbleSize
-    DefaultTextSize = 2
+    DefaultTextSize = 2.5
     TextSize = DefaultTextSize
+    
+    TextFont = love.graphics.newFont(10, "mono")
+    TextFont:setFilter("nearest")
+    love.graphics.setFont(TextFont)
 
     playerX, playerY, PlayerW, PlayerH, playerSpeed = WindowWidth/2, WindowHight/2, 50, 50, 1
     coin_amount = 0
@@ -53,16 +57,22 @@ function love.keypressed( key, scancode, isrepeat )
             love.window.setMode( screen_width, screen_height, {fullscreen=true, vsync=0} )
             worldX = worldX + 560
             worldY = worldY + 240
-            npcs[1].protraitSize = 2.5
-            speechBubbleSize = 24
-            TextSize = 8
+            speechBubbleSize = DefaultSpeechBubbleSize*2.4
+            TextSize = DefaultTextSize*2.4
+            for i = 1, #npcs, 1 do
+                npcs[i].protraitSize = 2.5
+                npcs[i].buttonMorphX = npcs[i].buttonMorphX*2+10
+            end
         else
             love.window.setMode( 800, 600, {vsync=0} )
             worldX = worldX - 560
             worldY = worldY - 240
-            npcs[1].protraitSize = 1.2
             speechBubbleSize = DefaultSpeechBubbleSize
             TextSize = DefaultTextSize
+            for i = 1, #npcs, 1 do
+                npcs[i].protraitSize = 1.2
+                npcs[i].buttonMorphX = (npcs[i].buttonMorphX-10)/2
+            end
         end
     end
 
@@ -118,4 +128,5 @@ function love.draw()
         end
     end
     Ui()
+    NpcTalk()
 end
