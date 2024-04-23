@@ -4,7 +4,7 @@ require "main"
 npc = {}
 npc.__index = npc
 
-function npc.create(x, y, width, hight, size, talkSize, protrait, collisionQ, say, PlayerSay)
+function npc.create(x, y, width, hight, size, talkSize, protrait, collisionQ, say, PlayerSay, DrawWorldBox)
     local instance = setmetatable({}, npc)
     instance.x = x
     instance.y = y
@@ -33,6 +33,7 @@ function npc.create(x, y, width, hight, size, talkSize, protrait, collisionQ, sa
     instance.stage = 1
     instance.buttonMorphX = 0
     instance.buttonMorphY = 0
+    instance.DrawWorldBox = DrawWorldBox
     return instance
 end
 
@@ -41,17 +42,21 @@ function npc:draw()
     self.midY = self.y+worldY+(tileSize/2)-(self.size/2)
 
     love.graphics.setColor(1, 1, 1)
-    love.graphics.rectangle("fill", self.midX, self.midY, self.size,self.size)
+    if self.DrawWorldBox == true then
+        love.graphics.rectangle("fill", self.midX, self.midY, self.size,self.size)
+    end
 
     if self.playerNear == true then
         if debug == true then
             print("interact")
         end
 
-        love.graphics.setColor(0, 1, 0)
-        love.graphics.rectangle("line", self.midX, self.midY, self.size,self.size)
-        love.graphics.setColor(1, 1, 1)
-        love.graphics.draw(E_talk, self.midX, self.midY)
+        if self.DrawWorldBox == true then
+            love.graphics.setColor(0, 1, 0)
+            love.graphics.rectangle("line", self.midX, self.midY, self.size,self.size)
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.draw(E_talk, self.midX, self.midY)
+        end
     end
 
     --if interacted == true and self.playerNear == true then
