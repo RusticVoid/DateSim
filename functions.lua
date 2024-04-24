@@ -177,11 +177,11 @@ function loadMap()
     }
     map2 = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,2,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
     }
     mapSize = #map*#map[1]
@@ -225,11 +225,7 @@ function loadMap()
                             collisionSize = collisionSize + 1
                             collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize+44, tileSize,tileSize, true, collisionSize)
                         else
-                            if map2[y][x] == 4 then
-                                collisionSize = collisionSize + 1
-                                collisions[collisionSize] = collision.create((x*tileSize)-tileSize, (y*tileSize)-tileSize, tileSize,tileSize, false, collisionSize)
-                            end
-                        end    
+                        end                           
                     end
                 end
             end
@@ -275,15 +271,6 @@ function drawMap2()
                             love.graphics.setColor(1, 1, 1)
                             love.graphics.draw(wooden_box, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale,tileScale)
                         else
-                            if map2[y][x] == 4 then
-                                love.graphics.setColor(1, 1, 1)
-                                love.graphics.draw(coin_UI, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale*4,tileScale*4)
-                            else
-                                if map2[y][x] == 5 then
-                                    love.graphics.setColor(1, 1, 1)
-                                    love.graphics.draw(map_MrLandLord, worldX+(x*tileSize)-tileSize, worldY+(y*tileSize)-tileSize, 0, tileScale,tileScale)
-                                end
-                            end
                         end
                     end
                 end
@@ -303,27 +290,38 @@ function LoadTexture()
     FloorBed_top = love.graphics.newImage("sprites/FloorBed_top.png")
     wooden_box = love.graphics.newImage("sprites/wooden_box.png")
     coin_UI = love.graphics.newImage("sprites/coin.png")
-    map_MrLandLord = love.graphics.newImage("sprites/MrLandlord.png")
+    MrLandlord_World = love.graphics.newImage("sprites/MrLandlord.png")
+    sladePainting_World = love.graphics.newImage("sprites/sladePaintingWall.png")
+    leatrixAlthoe_World = love.graphics.newImage("sprites/leatrix_althoe_map.png")
+
 end
 
 function loadNpcs()
-    npcs[1] = npc.create(tileSize*1,tileSize*5,tileSize,tileSize, tileSize-80, 30, "sprites/TEST_charchter.png", collisionSize + 1, "Sup.", "Hello!", true)
+    currentNpc = 1
+    npcs[currentNpc] = npc.create(tileSize*6,tileSize*5,tileSize,tileSize, tileSize, 30, "sprites/leatrix_althoe_protriat.png", collisionSize + 1, "Sup.", "Hello!", leatrixAlthoe_World)
     collisionSize = collisionSize + 1
-    collisions[collisionSize] = collision.create(npcs[1].x-npcs[1].talkSize, npcs[1].y-npcs[1].talkSize, npcs[1].width+(npcs[1].talkSize*2),npcs[1].hight+(npcs[1].talkSize*2), false, collisionSize)
+    collisions[collisionSize] = collision.create(npcs[currentNpc].x-npcs[currentNpc].talkSize, npcs[currentNpc].y-npcs[currentNpc].talkSize, npcs[currentNpc].width+(npcs[currentNpc].talkSize*2),npcs[currentNpc].hight+(npcs[currentNpc].talkSize*2), false, collisionSize)
     collisionSize = collisionSize + 1
-    collisions[collisionSize] = collision.create(npcs[1].midXcol, npcs[1].midYcol, npcs[1].size, npcs[1].size, true, collisionSize)
+    collisions[collisionSize] = collision.create(npcs[currentNpc].midXcol+30, npcs[currentNpc].midYcol, npcs[currentNpc].size-60, npcs[currentNpc].size, true, collisionSize)
 
-    npcs[2] = npc.create(tileSize*5,tileSize*1,tileSize,tileSize, tileSize-80, 30, "sprites/TEST_charchter_red.png", collisionSize + 1, "Hey.", "Hello!", true)
+    currentNpc = 2
+    npcs[currentNpc] = npc.create(tileSize*5,tileSize*1,tileSize,tileSize, tileSize-80, 30, "sprites/TEST_charchter_red.png", collisionSize + 1, "Hey.", "Hello!", false)
     collisionSize = collisionSize + 1
-    collisions[collisionSize] = collision.create(npcs[2].x-npcs[2].talkSize, npcs[2].y-npcs[2].talkSize, npcs[2].width+(npcs[2].talkSize*2),npcs[2].hight+(npcs[2].talkSize*2), false, collisionSize)
+    collisions[collisionSize] = collision.create(npcs[currentNpc].x-npcs[currentNpc].talkSize, npcs[currentNpc].y-npcs[currentNpc].talkSize, npcs[currentNpc].width+(npcs[currentNpc].talkSize*2),npcs[currentNpc].hight+(npcs[currentNpc].talkSize*2), false, collisionSize)
     collisionSize = collisionSize + 1
-    collisions[collisionSize] = collision.create(npcs[2].midXcol, npcs[2].midYcol, npcs[2].size, npcs[2].size, true, collisionSize)
+    collisions[collisionSize] = collision.create(npcs[currentNpc].midXcol, npcs[currentNpc].midYcol, npcs[currentNpc].size, npcs[currentNpc].size, true, collisionSize)
 
-    npcs[3] = npc.create(tileSize*3,tileSize*1,tileSize,tileSize, tileSize, 30, "sprites/MrLandlord.png", collisionSize + 1, "Hello Im Mr. Landlord.", "Hello!", false)
+    currentNpc = 3
+    npcs[currentNpc] = npc.create(tileSize*3,tileSize*3,tileSize,tileSize, tileSize, 30, "sprites/MrLandlord.png", collisionSize + 1, "Hello Im Mr. Landlord.", "Hello!", MrLandlord_World)
     collisionSize = collisionSize + 1
-    collisions[collisionSize] = collision.create(npcs[3].x-npcs[3].talkSize, npcs[3].y-npcs[3].talkSize, npcs[3].width+(npcs[3].talkSize*2),npcs[3].hight+(npcs[3].talkSize*2), false, collisionSize)
+    collisions[collisionSize] = collision.create(npcs[currentNpc].x-npcs[currentNpc].talkSize, npcs[currentNpc].y-npcs[currentNpc].talkSize, npcs[currentNpc].width+(npcs[currentNpc].talkSize*2),npcs[currentNpc].hight+(npcs[currentNpc].talkSize*2), false, collisionSize)
     collisionSize = collisionSize + 1
-    collisions[collisionSize] = collision.create(npcs[3].midXcol, npcs[3].midYcol, npcs[3].size, npcs[3].size, true, collisionSize)
+    collisions[collisionSize] = collision.create(npcs[currentNpc].midXcol, npcs[currentNpc].midYcol, npcs[currentNpc].size, npcs[currentNpc].size, true, collisionSize)
+
+    currentNpc = 4
+    npcs[currentNpc] = npc.create(tileSize*2,tileSize*0,tileSize,tileSize, tileSize, 30, "sprites/sladePainting.png", collisionSize + 1, "This is the holy bard, Slade, who expired many centuries ago.\nHe was a writer of music and history, perhaps the most\n   beloved musician in all the land.", "", sladePainting_World)
+    collisionSize = collisionSize + 1
+    collisions[collisionSize] = collision.create(npcs[currentNpc].x-npcs[currentNpc].talkSize, npcs[currentNpc].y-npcs[currentNpc].talkSize, npcs[currentNpc].width+(npcs[currentNpc].talkSize*2),npcs[currentNpc].hight+(npcs[currentNpc].talkSize*2), false, collisionSize)
 end
 
 function drawNpcs()
@@ -337,33 +335,19 @@ function Ui()
     love.graphics.print(":"..coin_amount, 80, -5, 0, 6)
 end
 
-function interactFunc(i)
+function interactFunc(colI)
     if debug == true then
         print("inside")
     end
 
-    if collisions[i].collisionID == npcs[1].collisionQ then
-        if debug == true then
-            print("npc 1")
+    for i = 1, #npcs, 1 do
+        if collisions[colI].collisionID == npcs[i].collisionQ then
+            if debug == true then
+                print("npc "..i)
+            end
+            npcs[i].playerNear = true
+            interact = true
         end
-        npcs[1].playerNear = true
-        interact = true
-    end
-
-    if collisions[i].collisionID == npcs[2].collisionQ then
-        if debug == true then
-            print("npc 2")
-        end
-        npcs[2].playerNear = true
-        interact = true
-    end
-
-    if collisions[i].collisionID == npcs[3].collisionQ then
-        if debug == true then
-            print("npc 3")
-        end
-        npcs[3].playerNear = true
-        interact = true
     end
 end
 
@@ -400,35 +384,35 @@ function NpcTalk()
                     npcs[currentNpc].buttonMorphX = 120
                     npcs[currentNpc].PlayerSay = " *Your Name*"
                     npcs[currentNpc].stage = 2
-                    love.timer.sleep(0.1)
+                    love.timer.sleep(clickDelay)
                 else
                     if npcs[currentNpc].stage == 2 then
                         npcs[currentNpc].say = "Thats a cool name."
                         npcs[currentNpc].buttonMorphX = 10
                         npcs[currentNpc].PlayerSay = "Thanks"
                         npcs[currentNpc].stage = 3
-                        love.timer.sleep(0.1)
+                        love.timer.sleep(clickDelay)
                     else
                         if npcs[currentNpc].stage == 3 then
                             npcs[currentNpc].say = "Oh wait can you help me with something!"
                             npcs[currentNpc].buttonMorphX = 190
                             npcs[currentNpc].PlayerSay = "What can I help with."
                             npcs[currentNpc].stage = 4
-                            love.timer.sleep(0.1)
+                            love.timer.sleep(clickDelay)
                         else
                             if npcs[currentNpc].stage == 4 then
                                 npcs[currentNpc].say = "I need 4 gold to pay my rent to Mr. Landlord."
                                 npcs[currentNpc].buttonMorphX = 250
                                 npcs[currentNpc].PlayerSay = "Ok I'll get you some gold."
                                 npcs[currentNpc].stage = 5
-                                love.timer.sleep(0.1)
+                                love.timer.sleep(clickDelay)
                             else
                                 if npcs[currentNpc].stage == 5 then
                                     npcs[currentNpc].say = "Thank you so much!"
                                     npcs[currentNpc].buttonMorphX = 80
                                     npcs[currentNpc].PlayerSay = "No problem."
                                     npcs[currentNpc].stage = 6
-                                    love.timer.sleep(0.1)
+                                    love.timer.sleep(clickDelay)
                                 else
                                     if npcs[currentNpc].stage == 6 then
                                         npcs[currentNpc].say = "Come back with 4 cold."
@@ -442,14 +426,14 @@ function NpcTalk()
                                             npcs[currentNpc].stage = 6
                                             update = true
                                         end
-                                        love.timer.sleep(0.1)
+                                        love.timer.sleep(clickDelay)
                                     else
                                         if npcs[currentNpc].stage == 7 then
                                             npcs[currentNpc].say = "Thank you so much your so kind."
                                             npcs[currentNpc].buttonMorphX = 80
                                             npcs[currentNpc].PlayerSay = "No problem!"
                                             npcs[currentNpc].stage = 7
-                                            love.timer.sleep(0.1)
+                                            love.timer.sleep(clickDelay)
                                         else
                                         end
                                     end
@@ -535,14 +519,14 @@ function NpcTalk()
                     npcs[currentNpc].buttonMorphX = 120
                     npcs[currentNpc].PlayerSay = " *Your Name*"
                     npcs[currentNpc].stage = 2
-                    love.timer.sleep(0.1)
+                    love.timer.sleep(clickDelay)
                 else
                     if npcs[currentNpc].stage == 2 then
                         npcs[currentNpc].say = "Thats a cool name."
                         npcs[currentNpc].buttonMorphX = 10
                         npcs[currentNpc].PlayerSay = "Thanks"
                         npcs[currentNpc].stage = 3
-                        love.timer.sleep(0.1)
+                        love.timer.sleep(clickDelay)
                     else
                         
                     end 
@@ -554,5 +538,16 @@ function NpcTalk()
         end
         love.graphics.setColor(0, 0, 0)
         love.graphics.print(npcs[currentNpc].PlayerSay, npcs[currentNpc].buttonX, npcs[currentNpc].buttonY, 0, TextSize*1.1)
+    end
+
+    if interacted == true and npcs[4].playerNear == true then
+        currentNpc = 4
+        npcs[currentNpc].speechbubbleX = npcs[currentNpc].protraitX+5*npcs[currentNpc].protraitSize
+        npcs[currentNpc].speechbubbleY = npcs[currentNpc].protraitY+230*npcs[currentNpc].protraitSize
+
+        love.graphics.draw(npcs[currentNpc].protrait, npcs[currentNpc].protraitX, npcs[currentNpc].protraitY-20, 0, npcs[currentNpc].protraitSize*10)
+        love.graphics.draw(speech_bubble, npcs[currentNpc].speechbubbleX, npcs[currentNpc].speechbubbleY, 0, speechBubbleSize)
+        love.graphics.setColor(0, 0, 0)
+        love.graphics.print(npcs[currentNpc].say, npcs[currentNpc].speechbubbleX+20*npcs[currentNpc].protraitSize, npcs[currentNpc].speechbubbleY+20*npcs[currentNpc].protraitSize, 0, TextSize)
     end
 end

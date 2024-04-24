@@ -4,6 +4,8 @@ function love.load()
     WindowWidth = 800
     WindowHight = 600
     fullscreen = false
+    ScreenScale = 1
+    MainMenu = true
 
     worldX = 100
     worldY = 100
@@ -36,18 +38,20 @@ function love.load()
 
     playerX, playerY, PlayerW, PlayerH, playerSpeed = WindowWidth/2, WindowHight/2, 50, 50, 1
     coin_amount = 0
+
+    clickDelay = 0.3
 end
 
 function love.keypressed( key, scancode, isrepeat )
-   if key == "escape" then
-      love.event.quit()
-   end
+    if key == "escape" then
+        MainMenu = true
+    end
    
-   if interact == true then
-       if key == 'e' then
-           interacted = not interacted
-       end
-   end
+    if interact == true then
+        if key == 'e' then
+            interacted = not interacted
+        end
+    end
 
     if key == 'f11' then
         fullscreen = not fullscreen
@@ -61,8 +65,8 @@ function love.keypressed( key, scancode, isrepeat )
             TextSize = DefaultTextSize*2.4
             for i = 1, #npcs, 1 do
                 npcs[i].protraitSize = 2.5
-                npcs[i].buttonMorphX = npcs[i].buttonMorphX*2+10
             end
+            ScreenScale = 2.4
         else
             love.window.setMode( 800, 600, {vsync=0} )
             worldX = worldX - 560
@@ -71,8 +75,8 @@ function love.keypressed( key, scancode, isrepeat )
             TextSize = DefaultTextSize
             for i = 1, #npcs, 1 do
                 npcs[i].protraitSize = 1.2
-                npcs[i].buttonMorphX = (npcs[i].buttonMorphX-10)/2
             end
+            ScreenScale = 1
         end
     end
 
@@ -108,25 +112,77 @@ function love.mousereleased( x, y, button, istouch, presses )
 end
 
 function love.update(dt)
-    WindowWidth, WindowHight = love.window.getMode()
-    playerX, playerY = WindowWidth/2, WindowHight/2
+    if MainMenu == false then
+        MouseX, MouseY = love.mouse.getPosition()
+        WindowWidth, WindowHight = love.window.getMode()
+        playerX, playerY = WindowWidth/2, WindowHight/2
+        KeyInput()
+    end
     MouseX, MouseY = love.mouse.getPosition()
-    KeyInput()
 end
 
 function love.draw()
-    love.graphics.setColor(1, 1, 1)
-    drawMap()
-    love.graphics.setColor(1, 0, 0)
-    love.graphics.rectangle("fill", playerX, playerY, PlayerW, PlayerH)
-    drawMap2()
-    drawNpcs()
-    if debug == true then
-        love.graphics.setColor(1, 0, 0)
-        for i = 1, collisionSize, 1 do
-            collisions[i]:draw()
+    if MainMenu == true then
+        buttonX = 10*ScreenScale
+        buttonXWidth = buttonX+275*ScreenScale
+        buttonY = 10*ScreenScale
+        buttonYWidth = buttonY+100*ScreenScale
+
+        if MouseX > buttonX*ScreenScale and MouseX < buttonXWidth*ScreenScale and MouseY > buttonY*ScreenScale and MouseY < buttonYWidth*ScreenScale then
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.rectangle("fill", buttonX*ScreenScale, buttonY*ScreenScale, 275*ScreenScale, 100*ScreenScale)
+            love.graphics.setColor(0, 0, 0)
+            love.graphics.print("PLAY!", buttonX*ScreenScale, buttonY*ScreenScale, 0, TextSize*3.5)
+            if MousePressed == true then
+                MainMenu = false
+            end
+        else
+            love.graphics.setColor(0.5, 0.5, 0.5)
+            love.graphics.rectangle("fill", buttonX*ScreenScale, buttonY*ScreenScale, 275*ScreenScale, 100*ScreenScale)
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.print("PLAY!", buttonX*ScreenScale, buttonY*ScreenScale, 0, TextSize*3.5)
         end
+
+        if MouseX > buttonX*ScreenScale and MouseX < buttonXWidth-65*ScreenScale and MouseY > buttonY+110*ScreenScale and MouseY < buttonYWidth+75*ScreenScale then
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.rectangle("fill", buttonX*ScreenScale, buttonY+110*ScreenScale, 210*ScreenScale, 60*ScreenScale)
+            love.graphics.setColor(0, 0, 0)
+            love.graphics.print("Settings", buttonX*ScreenScale, buttonY+110*ScreenScale, 0, TextSize*2)
+        else
+            love.graphics.setColor(0.5, 0.5, 0.5)
+            love.graphics.rectangle("fill", buttonX*ScreenScale, buttonY+110*ScreenScale, 210*ScreenScale, 60*ScreenScale)
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.print("Settings", buttonX*ScreenScale, buttonY+110*ScreenScale, 0, TextSize*2)
+        end
+
+        if MouseX > buttonX*ScreenScale and MouseX < buttonXWidth-175*ScreenScale and MouseY > buttonY+180*ScreenScale and MouseY < buttonYWidth+150*ScreenScale then
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.rectangle("fill", buttonX*ScreenScale, buttonY+180*ScreenScale, 100*ScreenScale, 60*ScreenScale)
+            love.graphics.setColor(0, 0, 0)
+            love.graphics.print("Exit", buttonX*ScreenScale, buttonY+180*ScreenScale, 0, TextSize*2)
+            if MousePressed == true then
+                os.exit()
+            end
+        else
+            love.graphics.setColor(0.5, 0.5, 0.5)
+            love.graphics.rectangle("fill", buttonX*ScreenScale, buttonY+180*ScreenScale, 100*ScreenScale, 60*ScreenScale)
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.print("Exit", buttonX*ScreenScale, buttonY+180*ScreenScale, 0, TextSize*2)
+        end
+    else
+        love.graphics.setColor(1, 1, 1)
+        drawMap()
+        love.graphics.setColor(1, 0, 0)
+        love.graphics.rectangle("fill", playerX, playerY, PlayerW, PlayerH)
+        drawMap2()
+        drawNpcs()
+        if debug == true then
+            love.graphics.setColor(1, 0, 0)
+            for i = 1, collisionSize, 1 do
+                collisions[i]:draw()
+            end
+        end
+        Ui()
+        NpcTalk()
     end
-    Ui()
-    NpcTalk()
 end
